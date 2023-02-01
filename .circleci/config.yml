@@ -2,10 +2,12 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.0-apache
+      - image: circleci/php:8.1-nginx
     steps:
       - checkout
-      - setup_remote_docker
-      - run: docker build -t mfieldhouse/docker-php-helloworld:$CIRCLE_BRANCH .
-
-
+      - run:
+          name: Build and test PHP application
+          command: |
+            set -x
+            php -v
+            php -S localhost:8080 -t .
